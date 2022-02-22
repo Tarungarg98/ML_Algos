@@ -108,7 +108,7 @@ class KMeans_TG:
             plt.show()
         self.cluster_dict=cluster_dict
 
-    def main(self):
+    def fit(self):
         start = time.time()
 
         print("Fitting ",self.no_of_clusters," clusters")
@@ -129,7 +129,24 @@ class KMeans_TG:
         print("Total time taken (in seconds) : ",round(end - start,2))
         return
             
-            
+    def predict(self,data):
+        start = time.time()
+        cluster_dict={}
+        for centroid in range(len(self.centroids)):
+            cluster_dict[centroid]=[]
+        for pair in data:
+            min_dist=100000
+            cluster=0
+            for centroid in range(len(self.centroids)):
+                dist=math.dist(pair,self.centroids[centroid])
+                if dist<min_dist:
+                    min_dist=dist
+                    cluster=centroid
+            cluster_dict[cluster].append(pair)
+
+        end = time.time()
+        print("Total time taken (in seconds) : ",round(end - start,2))
+        return cluster_dict            
 
             
     
